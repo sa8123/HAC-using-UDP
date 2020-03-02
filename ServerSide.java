@@ -22,7 +22,7 @@ public class ServerSide
 		{
 			socket = new DatagramSocket(9876);
 			byte [] incomingData = new byte[1024];
-			ArrayList<InetAddress> ipArray = new ArrayList();
+			ArrayList<InetAddress> ipArray = new ArrayList<InetAddress>();
 			while(true) 
 			{
 				// Declaring the socket to receive data and store the message in message.
@@ -35,6 +35,8 @@ public class ServerSide
 				System.out.println("Received message from client: " + message);
                 System.out.println("Client IP:"+ address.getHostAddress());
                 System.out.println("Client port: "+ port);
+                ipArray.add(address);
+                System.out.println("First element of database " + ipArray.get(0));
                 
                 String response = "Thank you for the message.";
                 byte[] sendData = response.getBytes();

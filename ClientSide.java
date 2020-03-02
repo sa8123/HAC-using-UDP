@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ClientSide
+public class ClientSide extends TimerTask
 {
 	DatagramSocket socket;
+	
+	
 	
 	//Constructor 
 	public ClientSide()
@@ -20,11 +22,11 @@ public class ClientSide
 		
 	}
 	
-	public void sendAndListen() 
+	@Override
+	public void run() 
 	{
 		try 
 		{
-			Timer timer = new Timer();
 			socket = new DatagramSocket();
 			InetAddress address = InetAddress.getByName("localhost");
 			String message = "Hello! from Client";
@@ -36,7 +38,6 @@ public class ClientSide
 			DatagramPacket receivePacket = new DatagramPacket(receiveMessage, receiveMessage.length);
 			socket.receive(receivePacket);
 			String actualData = new String(receivePacket.getData());
-			System.out.println("Response from server:" + actualData);
 			//socket.close();
 			
 			
@@ -54,10 +55,10 @@ public class ClientSide
 			e.printStackTrace();
 		}
 	}
-	public static void main(String[] args) 
+	public static void main(String[] args) throws InterruptedException 
 	{
-		ClientSide theClient = new ClientSide();
-		theClient.sendAndListen();
+		Timer timer = new Timer();
+		timer.schedule(new ClientSide(), 0, 20000);
 	}
 
 }

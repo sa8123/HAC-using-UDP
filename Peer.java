@@ -20,10 +20,11 @@ public class Peer extends Thread
 	{
 		public void run() 
 		{
+			DatagramSocket socketPeer = null;
 			try 
 			{
 				System.out.println("I am from run method");
-				DatagramSocket socketPeer = new DatagramSocket();
+				socketPeer = new DatagramSocket();
 			} 
 			catch (SocketException e) 
 			{
@@ -48,6 +49,14 @@ public class Peer extends Thread
 					e.printStackTrace();
 				}
 				packetPeer = new DatagramPacket(bytePeer, bytePeer.length, address, 1234);
+				try 
+				{
+					socketPeer.send(packetPeer);
+				} 
+				catch (IOException e) 
+				{
+					e.printStackTrace();
+				}
 			}
 			
 		}

@@ -7,6 +7,7 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.lang.Thread;
 
 public class Peer extends Thread
@@ -20,6 +21,7 @@ public class Peer extends Thread
 	{
 		public void run() 
 		{
+			System.out.println("I am from run method");
 			DatagramSocket socketPeer = null;
 			try 
 			{
@@ -110,6 +112,21 @@ public class Peer extends Thread
 		//clientInfo.add("192.168.0.71");
 		//clientInfo.add("192.168.0.77");
 		//clientInfo.add("192.168.0.76");
+		Scanner in = new Scanner(System.in);
+		System.out.println("Are you peer or server seeder?(P/S)");
+		String whoIs = in.nextLine();
+		if(whoIs.equals("P")) 
+		{
+			System.out.println("Enter the IP address");
+			String ip = in.nextLine();
+			System.out.println(ip);
+			clientInfo.add(ip);
+		}
+		else if(whoIs.equals("S")) 
+		{
+			InetAddress ip = InetAddress.getByName("localhost");
+			clientInfo.add(ip.toString());
+		}
 		Peer peer = new Peer();
 		peer.startSeeding();
 	}

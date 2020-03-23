@@ -92,11 +92,12 @@ public class P2P
 					{
 
 						ipAddress = network.get(j).getIP();
-
-
-						DatagramPacket sendPacket = new DatagramPacket(data,data.length,ipAddress,9876);
-			            socket.send(sendPacket);
-		                Thread.sleep(5000);
+						if(ipAddress != InetAddress.getLocalHost()) 
+						{
+							DatagramPacket sendPacket = new DatagramPacket(data,data.length,ipAddress,9876);
+				            socket.send(sendPacket);
+			                Thread.sleep(5000);
+						}
 
 					} 
 
@@ -174,14 +175,12 @@ public class P2P
 
                 	{
                 		seedSocket.receive(receivePacket);
-	                    InetAddress address = receivePacket.getAddress();
-	                    String ip = address.toString();
-	                    
+	                    InetAddress address = receivePacket.getAddress();       
 	                    Calendar cal = Calendar.getInstance();
-	                    System.out.println("Message received from: " + receivePacket.getAddress().toString().substring(0) + "at " + cal.getTime().toString());
+	                    System.out.println("Message received from: " + receivePacket.getAddress().toString().substring(1) + " at " + cal.getTime().toString());
 	    				cal.add(Calendar.SECOND, 30) ; 
 	                  //Loops through the arraylist and removes the client that has not responded for more than 30 seconds.
-	    				for (int i = 0; i<network.size(); i++)
+	    				for (int i = 0; i < network.size(); i++)
 
 	    				{
 							if(network.get(i).getIP().equals(address) == true)

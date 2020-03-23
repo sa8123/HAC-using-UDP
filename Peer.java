@@ -175,8 +175,10 @@ public class P2P
                 	{
                 		seedSocket.receive(receivePacket);
 	                    InetAddress address = receivePacket.getAddress();
+	                    String ip = address.toString();
+	                    
 	                    Calendar cal = Calendar.getInstance();
-	                    System.out.println("Message received from: " + receivePacket.getAddress() + "at " + cal.toString() + " time");
+	                    System.out.println("Message received from: " + receivePacket.getAddress().toString().substring(0) + "at " + cal.getTime().toString());
 	    				cal.add(Calendar.SECOND, 30) ; 
 	                  //Loops through the arraylist and removes the client that has not responded for more than 30 seconds.
 	    				for (int i = 0; i<network.size(); i++)
